@@ -1,0 +1,9 @@
+/* resources/css/app.css */
+
+/* Importando o CSS do Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Importando as diretivas do Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
