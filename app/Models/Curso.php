@@ -10,4 +10,10 @@ class Curso extends Model
     use HasFactory;
 
     protected $fillable = ['nome', 'descricao', 'duracao'];
+
+    
+    public function matriculas()
+    {
+        return $this->hasMany(Matricula::class);
+    }
 }

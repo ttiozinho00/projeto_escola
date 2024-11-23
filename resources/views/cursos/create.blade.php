@@ -1,21 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Curso</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto py-10">
-        <h1 class="text-2xl font-bold mb-6">Cadastrar Curso</h1>
-        <form method="POST" action="{{ route('cursos.store') }}" class="bg-white p-6 rounded shadow">
-            @csrf
+@extends('layouts.app')
+
+@section('content')
+<div class="max-w-2xl mx-auto bg-white p-10 rounded-lg shadow-xl mt-12">
+    <!-- Título do formulário -->
+    <h2 class="text-4xl font-bold text-center text-blue-600 mb-10">Cadastrar Novo Curso</h2>
+
+    <!-- Exibição de mensagens de erro -->
+    @if ($errors->any())
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-md">
+            <div class="text-red-700 font-semibold mb-2">Houve alguns erros:</div>
+            <ul class="list-disc list-inside text-red-500 text-sm space-y-1">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <!-- Formulário -->
+    <form method="POST" action="{{ route('cursos.store') }}" class="space-y-8">
+        @csrf
+
+        <!-- Formulário gerado pelo Filament Forms -->
+        <div class="space-y-6">
             {{ $form }}
-            <button type="submit" class="mt-4 px-4 py-2 bg-green-500 text-white rounded">
-                Salvar
+        </div>
+
+        <!-- Botão de envio -->
+        <div class="text-center mt-8">
+            <button type="submit" class="w-full md:w-auto px-10 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium text-lg rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-700 transition-transform duration-300 transform hover:scale-105 focus:ring-4 focus:ring-blue-300">
+                Salvar Curso
             </button>
-        </form>
-    </div>
-</body>
-</html>
+        </div>
+    </form>
+</div>
+@endsection

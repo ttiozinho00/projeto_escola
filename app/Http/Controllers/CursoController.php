@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use App\Models\Curso;
 
-class CursoController extends Controller
+class CursoController extends Controller implements HasForms
 {
     use InteractsWithForms;
 
-    public function validate(Request $request, array $rules, array $messages = [], array $attributes = [])
-    {
-        return $request->validate($rules, $messages, $attributes);
-    }
-
+    /**
+     * Exibe o formulário de criação de curso.
+     */
     public function create()
     {
         $form = $this->makeForm()
@@ -36,16 +36,28 @@ class CursoController extends Controller
         return view('cursos.create', compact('form'));
     }
 
+    /**
+     * Salva o curso no banco de dados.
+     */
     public function store(Request $request)
     {
-        $data = $this->validate($request, [
+        $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'duracao' => 'required|integer|min:1',
         ]);
 
-        Curso::create($data);
+        Curso::create($validatedData);
 
         return redirect()->route('cursos.index')->with('success', 'Curso criado com sucesso!');
+    }
+
+    /**
+     * Exibe todos os cursos.
+     */
+    public function index()
+    {
+        $cursos = Curso::all();
+        return view('cursos.index', compact('cursos'));
     }
 }
