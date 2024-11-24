@@ -13,7 +13,7 @@ class UsuarioForm extends Component implements Forms\Contracts\HasForms
 {
     use Forms\Concerns\InteractsWithForms;
 
-    public $name;
+    public $name;     // Definido como 'name' no formulário
     public $email;
     public $password;
 
@@ -42,13 +42,13 @@ class UsuarioForm extends Component implements Forms\Contracts\HasForms
 
     public function submit()
     {
-        $this->validate();
+        $this->validate();  // Validação do formulário
 
         // Criação do usuário
         $usuario = Usuario::create([
-            'name' => $this->name,
+            'nome' => $this->name,  // Agora passando para 'nome', pois a tabela espera 'nome'
             'email' => $this->email,
-            'password' => Hash::make($this->password),
+            'senha' => Hash::make($this->password),  // O campo do banco é 'senha'
         ]);
 
         // Logando automaticamente
@@ -65,6 +65,6 @@ class UsuarioForm extends Component implements Forms\Contracts\HasForms
 
     public function render()
     {
-        return view('livewire.usuario-form')->layout('layouts.app'); // Garantir que o layout está correto
+        return view('livewire.usuario-form')->layout('layouts.app');
     }
 }

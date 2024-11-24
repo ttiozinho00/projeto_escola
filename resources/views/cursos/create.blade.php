@@ -1,37 +1,44 @@
-@extends('layouts.app')
+<!-- resources/views/cursos/create.blade.php -->
+<x-layouts.app>
+    <div class="max-w-sm mx-auto bg-white shadow-md rounded-lg p-6 mt-10">
+        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Criar Novo Curso</h1>
 
-@section('content')
-<div class="max-w-2xl mx-auto bg-white p-10 rounded-lg shadow-xl mt-12">
-    <!-- Título do formulário -->
-    <h2 class="text-4xl font-bold text-center text-blue-600 mb-10">Cadastrar Novo Curso</h2>
+        <form action="{{ route('cursos.store') }}" method="POST" class="space-y-4">
+            @csrf
 
-    <!-- Exibição de mensagens de erro -->
-    @if ($errors->any())
-        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-md">
-            <div class="text-red-700 font-semibold mb-2">Houve alguns erros:</div>
-            <ul class="list-disc list-inside text-red-500 text-sm space-y-1">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <!-- Nome -->
+            <div>
+                <label for="nome" class="block text-gray-700 font-medium">Nome do Curso</label>
+                <input type="text" name="nome" id="nome" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ old('nome') }}" required>
+                @error('nome')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
 
-    <!-- Formulário -->
-    <form method="POST" action="{{ route('cursos.store') }}" class="space-y-8">
-        @csrf
+            <!-- Descrição -->
+            <div>
+                <label for="descricao" class="block text-gray-700 font-medium">Descrição</label>
+                <textarea name="descricao" id="descricao" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('descricao') }}</textarea>
+                @error('descricao')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <!-- Formulário gerado pelo Filament Forms -->
-        <div class="space-y-6">
-            {{ $form }}
-        </div>
+            <!-- Duração -->
+            <div>
+                <label for="duracao" class="block text-gray-700 font-medium">Duração (horas)</label>
+                <input type="number" name="duracao" id="duracao" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ old('duracao') }}" required>
+                @error('duracao')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <!-- Botão de envio -->
-        <div class="text-center mt-8">
-            <button type="submit" class="w-full md:w-auto px-10 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium text-lg rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-700 transition-transform duration-300 transform hover:scale-105 focus:ring-4 focus:ring-blue-300">
-                Salvar Curso
-            </button>
-        </div>
-    </form>
-</div>
-@endsection
+            <!-- Botão -->
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+                    Salvar Curso
+                </button>
+            </div>
+        </form>
+    </div>
+</x-layouts.app>

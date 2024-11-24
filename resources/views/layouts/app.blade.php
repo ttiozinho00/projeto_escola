@@ -29,8 +29,8 @@
     <!-- Conteúdo da Página -->
     <main class="py-8">
         <div class="max-w-7xl mx-auto px-4">
-            <!-- Aqui será inserido o conteúdo do Livewire ou da página atual -->
-            {{ $slot }}
+            <!-- Aqui será inserido o conteúdo da página -->
+            @yield('content')
         </div>
     </main>
 
