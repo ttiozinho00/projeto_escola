@@ -21,12 +21,15 @@
 
         <!-- Botões interativos -->
         <div class="mt-8 space-y-4 sm:space-y-0 sm:flex sm:justify-between">
+            <!-- Botão de Cadastro -->
             <a href="{{ route('usuarios.create') }}" 
                class="w-full sm:w-auto text-center bg-blue-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-blue-700 transform hover:scale-105 transition">
                 Cadastre-se Agora
             </a>
+
+            <!-- Botão de Login -->
             <a href="{{ route('login') }}" 
-               class="w-full sm:w-auto text-center bg-gray-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-gray-700 transform hover:scale-105 transition">
+               class="w-full sm:w-auto text-center bg-blue-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-blue-700 transform hover:scale-105 transition">
                 Faça Login
             </a>
         </div>

@@ -36,6 +36,7 @@ Route::get('/usuarios/{id}', [UsuarioController::class, 'show'])->name('usuarios
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy'); // Deletar usuário
 
 // Rotas para Login
+// Rotas para Login (Controller e Livewire)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); // Formulário de login
 Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate'); // Autenticação
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); // Logout
