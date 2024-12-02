@@ -1,4 +1,5 @@
 <!-- resources/views/components/layouts/app.blade.php -->
+<!-- essa views está vinculada ao cadastro usuarios -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

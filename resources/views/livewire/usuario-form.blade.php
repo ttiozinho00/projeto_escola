@@ -1,13 +1,25 @@
 <!-- resources/views/livewire/usuario-form.blade.php -->
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-xl bg-white p-8 rounded-lg shadow-lg mt-20">
+        <h2 class="text-3xl font-semibold text-center mb-6">Cadastrar Usuário</h2>
 
-<div class="max-w-lg mx-auto p-4">
-    <form wire:submit.prevent="submit" class="bg-white p-6 rounded shadow-lg">
-        <h2 class="text-2xl font-semibold mb-6">Cadastrar Usuário</h2>
+        <!-- Mensagem de sucesso -->
+        @if(session()->has('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
 
-        {{ $this->form }} <!-- Renderiza o formulário do Livewire -->
+        <!-- Formulário Filament -->
+        <form wire:submit.prevent="submit">
+            {{ $form }}  <!-- Exibe o formulário gerado pelo Filament -->
 
-        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded mt-4">
-            Criar Conta
-        </button>
-    </form>
+            <!-- Botão de Envio -->
+            <div class="mt-6">
+                <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Salvar
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

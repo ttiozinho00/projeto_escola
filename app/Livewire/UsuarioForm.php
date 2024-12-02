@@ -4,19 +4,48 @@
 
 namespace App\Livewire;
 
-use Filament\Forms;
 use Livewire\Component;
 use App\Models\Usuario;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Illuminate\Support\Facades\Hash;
 
-class UsuarioForm extends Component implements Forms\Contracts\HasForms
+class UsuarioForm extends Component implements HasForms
 {
-    use Forms\Concerns\InteractsWithForms;
+    use InteractsWithForms;
 
-    public $name;     // Definido como 'name' no formulário
+    public $name;
     public $email;
     public $password;
 
+    // Inicializa o formulário com o estado inicial
+    public function mount()
+    {
+        $this->form->fill([]);
+    }
+
+    // Função para enviar o formulário
+    public function submit()
+    {
+        // Validação dos dados do formulário
+        $validatedData = $this->form->getState();
+
+        // Criação do novo usuário
+        Usuario::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),  // Criptografando a senha
+        ]);
+
+        // Exibe a mensagem de sucesso
+        session()->flash('success', 'Usuário criado com sucesso!');
+
+        // Redireciona para a página inicial ou qualquer outra página desejada
+        return redirect()->route('home');
+    }
+
+    // Definindo a estrutura do formulário
     protected function getFormSchema(): array
     {
         return [
@@ -24,14 +53,14 @@ class UsuarioForm extends Component implements Forms\Contracts\HasForms
                 ->label('Nome')
                 ->required()
                 ->maxLength(255),
-                
+
             Forms\Components\TextInput::make('email')
                 ->label('E-mail')
                 ->required()
                 ->email()
                 ->unique(Usuario::class, 'email')
                 ->maxLength(255),
-                
+
             Forms\Components\TextInput::make('password')
                 ->label('Senha')
                 ->required()
@@ -40,31 +69,11 @@ class UsuarioForm extends Component implements Forms\Contracts\HasForms
         ];
     }
 
-    public function submit()
-    {
-        $this->validate();  // Validação do formulário
-
-        // Criação do usuário
-        $usuario = Usuario::create([
-            'nome' => $this->name,  // Agora passando para 'nome', pois a tabela espera 'nome'
-            'email' => $this->email,
-            'senha' => Hash::make($this->password),  // O campo do banco é 'senha'
-        ]);
-
-        // Logando automaticamente
-        auth()->attempt([
-            'email' => $this->email,
-            'password' => $this->password,
-        ]);
-
-        session()->flash('message', 'Usuário cadastrado e logado com sucesso!');
-        
-        // Redirecionar para a página inicial
-        return redirect()->route('home');
-    }
-
+    // Renderiza a view associada ao componente
     public function render()
     {
-        return view('livewire.usuario-form')->layout('layouts.app');
+        return view('livewire.usuario-form', [
+            'form' => $this->form, // Passando o formulário para a view
+        ]);
     }
 }
