@@ -1,5 +1,5 @@
 <?php
-/*app/Htto/Controllers/CursoController.php*/
+/*app/Http/Controllers/CursoController.php*/
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -61,3 +61,4 @@ class CursoController extends Controller implements HasForms
         return view('cursos.index', compact('cursos'));
     }
 }
+

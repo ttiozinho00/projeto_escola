@@ -1,5 +1,7 @@
 <?php
 
+/*app/Livewire/LoginForm*/
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -7,7 +9,7 @@ use App\Http\Controllers\LoginController;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\TextInput; // Importação do TextInput
+use Filament\Forms\Components\TextInput; 
 use Illuminate\Support\Facades\Hash;
 
 class LoginForm extends Component implements HasForms

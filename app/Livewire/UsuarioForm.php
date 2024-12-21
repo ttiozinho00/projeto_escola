@@ -1,6 +1,5 @@
 <?php
-
-// app/Http/Livewire/UsuarioForm.php
+/*app/Livewire/UsuarioForm.php*/
 
 namespace App\Livewire;
 
@@ -15,9 +14,9 @@ class UsuarioForm extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $name;
+    public $nome;  // Alterei 'name' para 'nome' para corresponder ao banco de dados
     public $email;
-    public $password;
+    public $senha;
 
     // Inicializa o formulário com o estado inicial
     public function mount()
@@ -33,9 +32,9 @@ class UsuarioForm extends Component implements HasForms
 
         // Criação do novo usuário
         Usuario::create([
-            'name' => $validatedData['name'],
+            'nome' => $validatedData['nome'],  // Usando 'nome' para corresponder ao banco
             'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),  // Criptografando a senha
+            'senha' => Hash::make($validatedData['senha']),  // Criptografando a senha
         ]);
 
         // Exibe a mensagem de sucesso
@@ -49,9 +48,9 @@ class UsuarioForm extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\TextInput::make('name')
+            Forms\Components\TextInput::make('nome')  // Alterei 'name' para 'nome'
                 ->label('Nome')
-                ->required()
+                ->required()  // Garantindo que o campo nome seja obrigatório
                 ->maxLength(255),
 
             Forms\Components\TextInput::make('email')
@@ -61,7 +60,7 @@ class UsuarioForm extends Component implements HasForms
                 ->unique(Usuario::class, 'email')
                 ->maxLength(255),
 
-            Forms\Components\TextInput::make('password')
+            Forms\Components\TextInput::make('senha')
                 ->label('Senha')
                 ->required()
                 ->password()
