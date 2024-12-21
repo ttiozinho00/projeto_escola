@@ -10,6 +10,13 @@
             </div>
         @endif
 
+        <!-- Mensagem de sucesso, caso exista -->
+        @if(session('success'))
+            <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Formulário de Login do Livewire -->
         <form wire:submit.prevent="login">
             <!-- Renderizando os campos do formulário -->
@@ -18,7 +25,7 @@
             </div>
 
             <div class="mb-4">
-                {{ $this->form->getComponent('password')->render() }}
+                {{ $this->form->getComponent('senha')->render() }}
             </div>
 
             <!-- Botão de envio -->
@@ -30,3 +37,4 @@
         </form>
     </div>
 </div>
+

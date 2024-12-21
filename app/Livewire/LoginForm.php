@@ -17,7 +17,7 @@ class LoginForm extends Component implements HasForms
     use InteractsWithForms;
 
     public $email;
-    public $password;
+    public $senha;
 
     // Inicializa o formulário com o estado inicial
     public function mount()
@@ -38,7 +38,7 @@ class LoginForm extends Component implements HasForms
         // Prepara a request com os dados
         $request = request()->merge([
             'email' => $validatedData['email'],
-            'password' => $validatedData['password'],
+            'senha' => $validatedData['senha'],
         ]);
 
         // Chama o método de autenticação do controller
@@ -56,7 +56,7 @@ class LoginForm extends Component implements HasForms
                 ->placeholder('Digite seu e-mail'),
 
             // Usando TextInput com tipo 'password' para campo de senha
-            TextInput::make('password')
+            TextInput::make('senha')
                 ->label('Senha')
                 ->required()
                 ->password() // Aplica a máscara de senha

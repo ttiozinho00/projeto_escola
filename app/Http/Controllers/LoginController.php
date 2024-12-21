@@ -25,15 +25,19 @@ class LoginController extends Controller
         // Valida as credenciais de login
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'senha' => 'required|min:6',
         ]);
 
         // Tenta encontrar o usuário com o e-mail informado
         $user = Usuario::where('email', $credentials['email'])->first();
 
-        if ($user && Hash::check($credentials['password'], $user->password)) {
+        if ($user && Hash::check($credentials['senha'], $user->senha)) {
             // Caso encontre, armazena o ID do usuário na sessão
             session(['usuario_id' => $user->id]);
+            
+            // Adiciona a mensagem de sucesso na sessão
+            session()->flash('success', 'Usuário logado com sucesso!');
+            
             // Redireciona para a página inicial ou dashboard
             return redirect()->route('home');
         }
