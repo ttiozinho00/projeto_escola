@@ -1,39 +1,19 @@
 <?php
 /*app/Http/Controllers/CursoController.php*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use App\Models\Curso;
 
-class CursoController extends Controller implements HasForms
+class CursoController extends Controller
 {
-    use InteractsWithForms;
-
     /**
      * Exibe o formulário de criação de curso.
      */
     public function create()
     {
-        $form = $this->makeForm()
-            ->schema([
-                \Filament\Forms\Components\TextInput::make('nome')
-                    ->label('Nome do Curso')
-                    ->required(),
-                \Filament\Forms\Components\Textarea::make('descricao')
-                    ->label('Descrição')
-                    ->nullable(),
-                \Filament\Forms\Components\TextInput::make('duracao')
-                    ->label('Duração (em horas)')
-                    ->numeric()
-                    ->required(),
-            ])
-            ->model(Curso::class)
-            ->statePath('data');
-
-        return view('cursos.create', compact('form'));
+        return view('cursos.create');
     }
 
     /**
@@ -41,14 +21,17 @@ class CursoController extends Controller implements HasForms
      */
     public function store(Request $request)
     {
+        // Validação padrão do Laravel
         $validatedData = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'nullable|string',
             'duracao' => 'required|integer|min:1',
         ]);
 
+        // Criação do curso
         Curso::create($validatedData);
 
+        // Redireciona com uma mensagem de sucesso
         return redirect()->route('cursos.index')->with('success', 'Curso criado com sucesso!');
     }
 
@@ -57,8 +40,10 @@ class CursoController extends Controller implements HasForms
      */
     public function index()
     {
+        // Recupera todos os cursos
         $cursos = Curso::all();
+
+        // Retorna a view com os cursos
         return view('cursos.index', compact('cursos'));
     }
 }
-

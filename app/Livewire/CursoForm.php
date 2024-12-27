@@ -1,5 +1,6 @@
 <?php
-/*app/Livewire/CursoForm*/
+/*app/Livewire/CursoForm.php*/
+
 namespace App\Livewire;
 
 use Livewire\Component;
@@ -10,21 +11,24 @@ use Filament\Forms\Contracts\HasForms;
 
 class CursoForm extends Component implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms {
+        validate as filamentValidate; // Renomeia o método validate para evitar conflito
+    }
 
-    public $data = [
-        'nome' => '',
-        'descricao' => '',
-        'duracao' => '',
-    ];
+    public $nome;
+    public $descricao;
+    public $duracao;
 
     /**
      * Inicializa o estado do formulário.
      */
     public function mount()
     {
-        // Preenche o formulário com os dados iniciais
-        $this->form->fill($this->data);
+        $this->form->fill([
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'duracao' => $this->duracao,
+        ]);
     }
 
     /**
@@ -32,15 +36,15 @@ class CursoForm extends Component implements HasForms
      */
     public function submit()
     {
-        // Valida os dados do formulário usando o método de validação do Livewire
-        $validatedData = $this->validate([
-            'data.nome' => 'required|string|max:255',
-            'data.descricao' => 'nullable|string',
-            'data.duracao' => 'required|integer',
-        ]);
+        // Validação dos dados do formulário usando o método renomeado
+        $validatedData = $this->filamentValidate();
 
-        // Cria o curso no banco de dados
-        Curso::create($validatedData['data']);
+        // Criação do curso no banco de dados
+        Curso::create([
+            'nome' => $validatedData['nome'],
+            'descricao' => $validatedData['descricao'],
+            'duracao' => $validatedData['duracao'],
+        ]);
 
         // Exibe uma mensagem de sucesso e redireciona
         session()->flash('success', 'Curso criado com sucesso!');
@@ -53,13 +57,16 @@ class CursoForm extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\TextInput::make('data.nome')
+            Forms\Components\TextInput::make('nome')
                 ->label('Nome do Curso')
-                ->required(),
-            Forms\Components\Textarea::make('data.descricao')
+                ->required()
+                ->maxLength(255),
+
+            Forms\Components\Textarea::make('descricao')
                 ->label('Descrição')
                 ->nullable(),
-            Forms\Components\TextInput::make('data.duracao')
+
+            Forms\Components\TextInput::make('duracao')
                 ->label('Duração (em horas)')
                 ->numeric()
                 ->required(),
@@ -76,4 +83,3 @@ class CursoForm extends Component implements HasForms
         ]);
     }
 }
-
