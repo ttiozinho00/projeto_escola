@@ -1,3 +1,4 @@
+<!-- resources/views/usuarios/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')

@@ -1,5 +1,5 @@
 <?php
-/*app/Htto/Controllers/MatriculaController.php*/
+/*app/Http/Controllers/MatriculaController.php*/
 namespace App\Http\Controllers;
 
 use App\Models\Matricula;
@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class MatriculaController extends Controller
 {
-    
     /**
      * Exibe o formulário de matrícula.
      */
@@ -31,8 +30,11 @@ class MatriculaController extends Controller
             'curso_id' => 'required|exists:cursos,id',
         ]);
 
+        // Cria a matrícula
         Matricula::create($request->all());
 
-        return redirect()->route('matriculas.create')->with('success', 'Matrícula realizada com sucesso!');
+        // Define a chave de sessão personalizada
+        return redirect()->route('matriculas.create')
+                         ->with('matricula_realizada', 'Matrícula realizada com sucesso!');
     }
 }
